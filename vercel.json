@@ -1,0 +1,12 @@
+{
+    "rewrites": [
+        {
+            "source": "/api/(.*)",
+            "destination": "/api"
+        }
+    ],
+    "build": {
+        "dev": "node api/index-dev.js",
+        "prod": "node api/indexAppTricampeon.js"
+    }
+}
