@@ -43,6 +43,8 @@ import authRoutes from './routes/auth.routes.js';
 
 
 //   middlewares
+
+//   middlewares 
 app.use(cors());
 app.use(morgan('dev'));
 app.use(helmet())

@@ -5,7 +5,7 @@ import path,{ dirname } from 'path'
 import { fileURLToPath } from 'url';
 import { config } from 'dotenv';
 import validatePassword from '../middlewares/validatePassword.js'
-import { createUser, login, validateSession } from "../controllers/auth.controllers.js";
+import { createUser, login, updateImageUser, validateSession } from "../controllers/auth.controllers.js";
 import verifyToken from "../middlewares/verifyToken.js";
 config();
 
@@ -42,6 +42,7 @@ const router = Router();
 
 router.post('/createUser', upload.single('imgUser'), [ validatePassword ], createUser)
 router.post('/login', login)
+router.put('/updateImageUser', [ verifyToken ], upload.single('imgUser'), updateImageUser );
 router.post('/validateSession', [ verifyToken ], validateSession)
 
 export default router;

@@ -13,7 +13,8 @@ export const createUser = async ( req,res ) => {
     if(findExistUser || findExistEmail) return res.status(203).json({message: 'El usuario o email ya estan registrados!',status: 203})
 
     if(validatePassword.validation == false) return res.status(400).json({message: validatePassword.message ,status: 400}) 
-    
+    if(username.length <= 4 ) return res.status(400).json({message: 'El usuario debe contener 5 caracteres minimo.', status: 400})
+
     const newUser = new User({
       username,
       password,
@@ -84,5 +85,42 @@ export const validateSession = async ( req,res ) => {
   } catch (error) {
       console.error('Ocurrio un error en validateSession(). auth.controllers.js. Error: ', error.error);
       return res.status(error.status).json({ error: error.error, status: error.status });
+  }
+}
+
+export const updateImageUser = async ( req, res ) => {
+  try {
+    const image = req.file;
+    const idUser = req.idUser;
+    const isLogged = req.isLogged.isLogged;
+
+
+    if(!isLogged) return res.status(401).json({message: 'Usuario no autenticado!', status: 401, isLogged});
+    const foundUserAuth = await User.findById(idUser)
+
+    if(!req.file) return res.status(404).json({ status: 404, message: 'No se cargo ninguna imagen!' });
+
+    if(image.size > process.env.CLOUDINARY_LIMIT_FILESIZE){
+      return res.status(202).json({message:'Se permiten subir imagenes hasta 10.4Mb', status: 202});
+    }
+
+    try {
+      const result = await cloudinary.v2.uploader.upload(image.path,{
+        folder: "tricampeon/users"
+      });
+      foundUserAuth.imgUrl = `${result.secure_url}`
+      await fs.unlink(image.path)
+    } catch (error) {
+      console.error('Error al subir imagen a Cloudinary. Error: ', error)
+      return;
+    }
+
+
+    await foundUserAuth.save();
+
+    return res.status(200).json({message: 'Imagen de perfil actualizada!', sendUser: foundUserAuth, isLogged, status: 200 })
+  } catch (error) {
+    console.error('Ocurrio un error en updateImageUser(). auth.controllers.js. Error: ', error);
+    return res.status(error.status).json({ error: error.error, status: error.status });
   }
 }

@@ -24,7 +24,7 @@ const cache = {
     }
 };
 
-const CACHE_TTL = 600000; // Tiempo en ms de guardado en la memoria caché
+const CACHE_TTL = 60000; // Tiempo en ms de guardado en la memoria caché
 
 // Limpiar el caché cada 60 segundos
 setInterval(() => {
