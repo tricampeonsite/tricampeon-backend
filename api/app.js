@@ -39,6 +39,7 @@ import betsRoutes from './routes/bets.routes.js';
 import homeRoutes from './routes/home.routes.js';
 import channelRoutes from './routes/channels.routes.js';
 import authRoutes from './routes/auth.routes.js';
+import compression from 'compression';
 
 
 
@@ -47,6 +48,7 @@ import authRoutes from './routes/auth.routes.js';
 //   middlewares 
 app.use(cors());
 app.use(morgan('dev'));
+app.use(compression());
 app.use(helmet())
 app.use(express.json())
 app.use(express.urlencoded({ extended:false }));
