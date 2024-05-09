@@ -46,3 +46,17 @@ export const getMatchesLeagueArgentina = async ( req,res ) => {
         res.json({message: error})
     }
 }
+
+export const getMatchByID = async ( req,res ) => {
+    try {
+        const match = req.match;
+
+        if(!match) return res.status(404).json({ message: 'No se encontro el evento.', status: 404, match: []});
+
+        return res.status(200).json({message: 'Evento encontrado.', status: 200, match});
+    } catch (error) {
+        console.log('Ocurrio un error en getMatchByID. Error: ',error);
+        if(error) return res.status(500).json({error})
+    }
+}
+

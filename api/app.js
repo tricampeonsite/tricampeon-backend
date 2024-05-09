@@ -41,10 +41,6 @@ import channelRoutes from './routes/channels.routes.js';
 import authRoutes from './routes/auth.routes.js';
 import compression from 'compression';
 
-
-
-//   middlewares
-
 //   middlewares 
 app.use(cors());
 app.use(morgan('dev'));

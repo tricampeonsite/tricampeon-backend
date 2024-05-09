@@ -5,16 +5,15 @@ import decodeURL from './decodeURL.js';
 const STARPLUS_EVENTS = process.env.URL_STARPLUS_EVENTS;
 
 // ESTA FUNCION RETORNA EL "URL" DE EL O LOS EVENTOS DE STAR+
-export default async (channelsRecived) => {
+export default async (channelsRecived, homeTeam, awayTeam) => {
     try {
         const requestAPIevents = await fetch(STARPLUS_EVENTS);
         const responseAPIevents = await requestAPIevents.json();
 
-        const filterStarPlus = channelsRecived.filter(channel => channel.name == "star+")[0];
+        const filterStarPlus = channelsRecived.filter(channel => channel.name == 'star+')[0];
 
         const filterAndGetURLevent = responseAPIevents
   .filter(event => {
-    const { homeTeam, awayTeam } = filterStarPlus;
     const dateEvent = event.title.toLowerCase().trim(); 
     const teamAway = awayTeam.toLowerCase().trim();
     const teamHome = homeTeam.toLowerCase().trim();
@@ -26,7 +25,7 @@ export default async (channelsRecived) => {
     const excludeRegex = new RegExp(excludeKeywords.join("|"), "i");
 
     // Aquí es donde se hace el cambio, reemplazando event.title con dateEvent
-    return (awayRegex.test(dateEvent) || homeRegex.test(dateEvent)) && !excludeRegex.test(dateEvent);
+    return (awayRegex.test(dateEvent) || homeRegex.test(dateEvent)) && !excludeRegex.test(dateEvent) && event.status !== 'FINALIZADO';
   })
   .map(event => decodeURL(event))
   .toString();

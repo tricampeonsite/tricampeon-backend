@@ -1,11 +1,11 @@
 import { Router } from "express";
-import { createNewChannel, getAllChannels, getChannelSchedule, getChannelsByMatch } from "../controllers/channels.controllers.js";
+import { createNewChannel, getAllChannels, getChannelByID, getChannelSchedule } from "../controllers/channels.controllers.js";
 
 const router = Router();
 
 router.post('/createNewChannel', createNewChannel);
 router.get('/getAllChannels', getAllChannels);
-router.post('/getChannelsByMatch', getChannelsByMatch);
 router.get('/getChannelSchedule', getChannelSchedule);
+router.get('/getChannelByID/:idChannel', getChannelByID);
 
 export default router;

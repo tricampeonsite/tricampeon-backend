@@ -29,37 +29,6 @@ export const getAllChannels = async ( req,res ) => {
     }
 }
 
-export const getChannelsByMatch = async ( req,res ) => {
-    try {
-        const channelsRecived = req.body;
-
-        if(!channelsRecived.length) return res.status(400).json({error: 'Not channels recived!', status: 400, channelsByMatch: []});
-
-        const namesRecived = channelsRecived.map(channel => channel.name);
-
-        const findChannelsByMatch = await Channels.find({ name: { $in: namesRecived } },{ eventsProgramming: 0, createdAt: 0, updatedAt: 0 })
-        
-        if(!findChannelsByMatch.length) return res.status(404).json({error: 'Not channels founded!', status: 404, channelsByMatch:[]});
-
-        const starplusURL = await starPlusEvents(channelsRecived);
-        
-
-        const setStarPlusURL = findChannelsByMatch.map(match => {
-            if(match.name === "star+"){
-                match.urlChannel = starplusURL === "#" || starplusURL === "" ? match.urlChannel : [ starplusURL ];
-                return match;
-            } else {
-                return match;
-            }
-        })
-
-        res.status(200).json({channelsByMatch: setStarPlusURL, status: 200});
-    } catch (error) {
-        console.error('Ocurrio un error en el controlador getChannelsByMatch. Error: ', error)
-        res.status(500).json({error, status: 500});
-    }
-}
-
 export const getChannelSchedule = async (req,res) => {
     try {
         const requestDataVix = await fetch(process.env.URL_VIX_EVENTS);
@@ -87,6 +56,21 @@ export const getChannelSchedule = async (req,res) => {
 
     } catch (error) {
         console.error('Ocurrio un error en el controlador getChannelScheduled. Error: ', error)
+        res.status(500).json({error, status: 500});
+    }
+}
+
+export const getChannelByID = async ( req,res ) => {
+    try {
+        const { idChannel } = req.params;
+        if(!idChannel) return res.status(400).json({ message: 'Falta parametro "idChannel', status: 400 });
+        const findChannel = await Channels.findById(idChannel);
+
+        if(!findChannel) return res.status(404).json({ message: 'Channel not found.', status: 404 });
+
+        return res.status(200).json({ channel: [findChannel], status: 200 });
+    } catch (error) {
+        console.error('Ocurrio un error en el controlador getChannelByID. Error: ', error)
         res.status(500).json({error, status: 500});
     }
 }

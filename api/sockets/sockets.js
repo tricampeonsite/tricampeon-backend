@@ -41,7 +41,7 @@ export const joinEvent_Socket = async (socket) => {
                 type: 'joinChat',
                 message: `${user} ingresó al chat!`
             });
-            
+
             }, (error) => {
                 console.error(error)
             });        
@@ -68,7 +68,7 @@ export const getMembers_Socket = (socket) => {
     try {
         socket.on('listMembers', (data) => {
             const room = rooms.get(data.idEvent);
-            socket.to(data.idEvent).emit('listMembers', room)
+            socket.to(data.idEvent).emit('listMembers', room);
         });
     } catch (error) {
         console.error('Ocurrio un error al obtener los miembros del evento. Error: ', error);

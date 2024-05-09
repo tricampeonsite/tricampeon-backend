@@ -1,6 +1,8 @@
 import { Router } from "express";
-import { getMatchesLeagueArgentina, getMatchesLeagues, getMatchesToday } from '../controllers/matches.js'
+import { getMatchByID, getMatchesLeagueArgentina, getMatchesLeagues, getMatchesToday } from '../controllers/matches.js'
 import getMachesCheerio from "../middlewares/getMachesCheerio.js";
+import searchMatch from "../middlewares/searchMatch.js";
+import middleware_getChannelByMatch from "../middlewares/middleware_getChannelByMatch.js";
 
 const router = Router();
 
@@ -13,7 +15,8 @@ router.use((req, res, next) => {
   });
 
 router.post('/getMatchesLeagues', getMatchesLeagues )
-router.post('/getMatches', [ getMachesCheerio ], getMatchesToday)
+router.post('/getMatches', [ getMachesCheerio ], getMatchesToday);
+router.get('/getMatchByID/:idMatch', [ getMachesCheerio, searchMatch, middleware_getChannelByMatch ], getMatchByID)
 router.post('/getMatchesLeagueArgentina', getMatchesLeagueArgentina)
 
 export default router;
