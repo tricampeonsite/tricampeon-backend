@@ -3,6 +3,10 @@ import Channels from "../models/Channels.js";
 
 export default async ( req,res,next ) => {
     try {
+        const typeStream = req.typeStream;
+        
+        if(typeStream && typeStream === "CHANNEL") return next();
+        
         const channelsRecived = req.match[0].channels;
         const match = req.match[0].contestants;
 

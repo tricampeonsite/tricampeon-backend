@@ -4,10 +4,9 @@ export default (event) => {
 
     if (url && url !== "#") {
         var encodedPart = url.split("\/embed\/eventos\/?r=")[1];
-        var decodedPart = Buffer.from(encodedPart, 'base64').toString('binary');
+        var decodedPart = Buffer.from(encodedPart, 'base64').toString('binary');        
         var newUrl = urlBase + decodedPart + "&title=" + encodeURIComponent(title);
-        var encodedNewUrl = Buffer.from(newUrl).toString('base64');
-
+        // var encodedNewUrl = Buffer.from(newUrl).toString('base64');
         return newUrl;
     } else {
       return "#"

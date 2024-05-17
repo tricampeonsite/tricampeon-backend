@@ -41,22 +41,24 @@ import channelRoutes from './routes/channels.routes.js';
 import authRoutes from './routes/auth.routes.js';
 import compression from 'compression';
 
+
 //   middlewares 
 app.use(cors());
 app.use(morgan('dev'));
 app.use(compression());
-app.use(helmet())
+// app.use(helmet(helmetConfig))
 app.use(express.json())
 app.use(express.urlencoded({ extended:false }));
 
+
 app.use('/api/tricampeon', homeRoutes)
-app.use('/api/tricampeon/leagues', leaguesRoutes);
-app.use('/api/tricampeon/matches', matchesRoutes);
-app.use('/api/tricampeon/scorers', scorersRoutes);
-app.use('/api/tricampeon/teams', teamsRoutes);
-app.use('/api/tricampeon/users', usersRoutes);
-app.use('/api/tricampeon/bets', betsRoutes);
+app.use('/api/tricampeon/leagues', helmet(), leaguesRoutes);
+app.use('/api/tricampeon/matches', helmet(), matchesRoutes);
+app.use('/api/tricampeon/scorers', helmet(), scorersRoutes);
+app.use('/api/tricampeon/teams', helmet(), teamsRoutes);
+app.use('/api/tricampeon/users', helmet(), usersRoutes);
+app.use('/api/tricampeon/bets', helmet(), betsRoutes);
 app.use('/api/tricampeon/channels', channelRoutes);
-app.use('/api/tricampeon/auth', authRoutes);
+app.use('/api/tricampeon/auth', helmet(), authRoutes);
 
 export default app;

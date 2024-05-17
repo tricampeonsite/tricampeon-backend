@@ -39,6 +39,10 @@ setInterval(() => {
 
 export default async (req, res, next) => {
     try {
+        const typeStream = req.typeStream;
+
+        if(typeStream && typeStream === "CHANNEL") return next();
+
         const { dateMatch } = req.body;
         const cacheKey = dateMatch ? 'withDateMatch' : 'withoutDateMatch';
         const cachedData = cache[cacheKey];

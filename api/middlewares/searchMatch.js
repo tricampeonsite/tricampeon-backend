@@ -1,5 +1,9 @@
 export default async ( req, res, next ) => {
     try {
+        const typeStream = req.typeStream;
+        
+        if(typeStream && typeStream === "CHANNEL") return next();
+
         const { idMatch } = req.params;
         const matches = req.matches;
         const findMatch = matches.flatMap(events => events.matches).filter(match => match.id === idMatch);
