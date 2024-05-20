@@ -24,7 +24,7 @@ const trySOURCE = (urlVideo, sources, listServers, index, onValid, onInvalid) =>
             return sources_2;
         } else if (getParameter_url) {
             return sources_1;
-        } else if(containMpdOrM3u8File){
+        } else if(containMpdOrM3u8File) {
             return sources_4;
         } else {
             return sources_4

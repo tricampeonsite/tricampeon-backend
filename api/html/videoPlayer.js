@@ -1,6 +1,5 @@
 export default (title, img, url, setKey) => {
     return `
-
     <!DOCTYPE html>
 <html lang="en">
 
@@ -21,38 +20,67 @@ export default (title, img, url, setKey) => {
 
 <script>
     var playerInstance = jwplayer("player");
+    var urlVideo = "${url}";
+
+    var testIframeUrl = async (callback) => {
+        try {
+            const iframeUrl = window.location.href; // Obtener la URL del iframe
+            const req = await axios.get(iframeUrl);
+            callback(req.status === 200); // retorna true 
+            location.reload();
+        } catch (error) {
+            console.log("${url}")
+            callback(false);
+        }
+    };
 
     const getURL = async () => {
         try {
-            playerInstance.setup({
-                playlist: [{
-                    "title": "${title}",
-                    "description": "Eventos en TRICAMPEÓN",
-                    "image": "${img}",
-                    "sources": [{
-                        "default": false,
-                        "type": "dash",
-                        "file": "${url}",
-                        "drm": ${setKey()},
-                        "label": "0"
-                    }]
-                }],
-                width: "100%",
-                height: "100%",
-                aspectratio: "16:9",
-                autostart: true,
-                cast: {},
-                sharing: {}
+            const setupPlayer = () => {
+                playerInstance.setup({
+                    playlist: [{
+                        "title": "${title}",
+                        "description": "Eventos en TRICAMPEÓN",
+                        "image": "${img}",
+                        "sources": [{
+                            "default": false,
+                            "type": "dash",
+                            "file": "${url}",
+                            "drm": ${setKey()}, // Asumiendo que setKey() devuelve el objeto DRM adecuado
+                            "label": "0"
+                        }]
+                    }],
+                    width: "100%",
+                    height: "100%",
+                    aspectratio: "16:9",
+                    autostart: true,
+                    cast: {},
+                    sharing: {}
+                });
+            };
+
+            setupPlayer();
+
+            playerInstance.on('error', (error) => {
+                console.error('Ocurrió un error en la conexión. Error: ', error);
+
+                const retryLoad = () => {
+                    testIframeUrl(function(isValid) {
+                        if (isValid) {
+                            console.log("La URL del iframe es válida.");
+                            setupPlayer(); // Re-setup the player with the valid URL
+                        } else {
+                            setTimeout(retryLoad, 3000); // Retry after 3 seconds
+                        }
+                    });
+                };
+
+                retryLoad();
             });
 
-            playerInstance.on('error', () => {
-                getURL()
-                console.error('Ocurrio un error en la conexion.')
-            })
-
             playerInstance.on('play', () => {
-                console.log('Comenzo la reproduccion de video ...');
-            })
+                console.log('Comenzó la reproducción de video ...');
+            });
 
         } catch (error) {
             console.error(error);
@@ -61,6 +89,7 @@ export default (title, img, url, setKey) => {
 
     getURL();
 </script>
+
 </body>
 
 </html>

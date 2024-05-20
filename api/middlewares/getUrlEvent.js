@@ -38,6 +38,7 @@ export default async (req, res, next) => {
             function (err) {
                 console.error('No se encontro el servidor. Error: ', err);
                 req.status = { status: 500, error: 'No se encontro servidor para esta transmisión.', message: err }
+                // return await Promise.reject({status: 500, error: 'No se encontro servidor para esta transmisión.', message: err})
                 next()
             })
 

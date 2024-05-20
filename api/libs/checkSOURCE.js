@@ -5,7 +5,6 @@ import https from 'https';
 export default (url, callback) => {
     https.get(url, (res) => {
         const { statusCode } = res;
-        console.log(statusCode);
         callback(statusCode === 200 || statusCode == 302);
     }).on('error', () => {
         console.log('URL de transmision no disponible!.');
