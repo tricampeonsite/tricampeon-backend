@@ -38,6 +38,7 @@ const trySOURCE = (urlVideo, sources, listServers, index, onValid, onInvalid) =>
             onValid(sources)
             console.log('Servidor encontrado!');
         } else {
+            console.log(sources);
             console.error('Buscando servidor ...')
             trySOURCE(urlVideo, sources, listServers, index + 1, onValid, onInvalid);
         }
