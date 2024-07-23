@@ -28,8 +28,6 @@ export const createUser = async ( req,res ) => {
         });
         newUser.imgUrl = `${result.secure_url}`
         await fs.unlink(req.file.path)
-    } else {
-        newUser.imgUrl = ''
     }
 
     await newUser.save()

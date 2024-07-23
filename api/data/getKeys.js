@@ -15,7 +15,7 @@ export default (getParameter_get) => {
         keyId = "24f2b3e741f0d9e9a8d516faff38bddc";
         key = "bbd3fd02fb104e1463ac528a13f67e4a";
     }
-    else if (getParameter_get == "RVNQTjJfQXJn")//ESPN2_Arg
+    else if (getParameter_get == "RVNQTjJfQXJn") //ESPN2_Arg
     {
         keyId = "65a5bfa3c7a72dde60be9b0c7406c8fc";
         key = "0b40ae9f78a7bac3b57ecbf72d3c081e";
@@ -24,11 +24,14 @@ export default (getParameter_get) => {
         keyId = "da8a49a594160cc0059f07b9f71cd39a";
         key = "37ca91dd799b351a02445151c7f61070";
     }
-    else if (getParameter_get == "Rm94U3BvcnRzM19VWQ==") // ESPN 6
-    {
+    else if (getParameter_get == "Rm94U3BvcnRzM19VWQ==") {
         keyId = "5fc7b662e69c0fbf8d39691166b1c919";
         key = "89157cdd25df25d56f1ecccee3850888";
-    } else if (getParameter_get == "VGVsZWZlSEQ=") {
+    } else if (getParameter_get == "Rm94U3BvcnRzMl9VWQ==") {  // ESPN 7
+        keyId = "5fc7b662e69c0fbf8d39691166b1c919";
+        key = "89157cdd25df25d56f1ecccee3850888";
+    }
+    else if (getParameter_get == "VGVsZWZlSEQ=") {
         keyId = "3cec1b1ea9799dda5596e64f37e5ed20";
         key = "c69f3afde2085dcaaaddbf55246a0323";
     }

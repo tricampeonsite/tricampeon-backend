@@ -111,7 +111,7 @@ export default (getParameter_get) => {
     getParameter_get == "VW5pdmVyc2FsX0NpbmVtYQ==" || 
     getParameter_get == "VW5pdmVyc2FsX0NvbWVkeQ==" || 
     getParameter_get == "dW5pdmVyc2FsX0NyaW1l" || 
-    getParameter_get == "VW5pdmVyc2FsX1ByZW1pZXJl" || 
+    getParameter_get == "VW5pdmVyc2FsX1ByZW1pZXJl" ||
     getParameter_get == "VW5pdmVyc2FsX1JlYWxpdHk="){
         number = 6;
     } else if (getParameter_get == "QzlOX0M0"){
@@ -146,13 +146,6 @@ export default (getParameter_get) => {
 
     return number;
 }
-
-
-
-
-
-
-
 
 
 

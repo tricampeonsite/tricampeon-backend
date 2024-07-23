@@ -1,13 +1,13 @@
-import https from 'https';
+import axios from 'axios';
 
 // @param url = ruta de transmision
 // @param callback = callback(success)
-export default (url, callback) => {
-    https.get(url, (res) => {
-        const { statusCode } = res;
-        callback(statusCode === 200 || statusCode == 302);
-    }).on('error', () => {
-        console.log('URL de transmision no disponible!.');
-        callback(false); // Si hay un error en la solicitud, se llama al callback con false
-    });
+export default async (url, callback) => {
+    try {
+        const req = await axios.get(url)
+        const { status } = req;
+        callback(status === 200 || status == 302 || status === 304);
+    } catch (error) {
+        callback(false);
+    }
 };

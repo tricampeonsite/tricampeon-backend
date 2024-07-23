@@ -28,7 +28,6 @@ export const joinEvent_Socket = async (socket) => {
             socket.leaveAll();
             socket.join(roomId);
             
-
             /*
                El valor por defecto del usuario agregado a la sala es el id del socket
                Lo reemplace para poder manipular mejor los datos mas adelante
