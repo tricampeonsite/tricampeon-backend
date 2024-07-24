@@ -23,14 +23,21 @@ export default (title, img, url, setKey) => {
     var urlVideo = "${url}";
     var isReconnecting = false;
 
-    var testIframeUrl = async (callback) => {
+    var testIframeUrl = async () => {
         try {
-            const iframeUrl = window.location.href; // Obtener la URL del iframe
+            const iframeUrl = window.location.href;
             const req = await axios.get(iframeUrl);
-            callback(req.status === 200 || req.status === 302 || req.status === 304); // retorna true 
-        } catch (error) {
-            console.log("REINTENTANDO: ${url}")
-            callback(false);
+    
+            if(req.status === 200){
+              isReconnecting = false;
+              console.log("Conexión exitosa");
+            } else {
+              console.error("Conexión fallida, reintentando...");
+              isReconnecting = true;
+            }       
+        } catch(error) {
+            console.error("Ocurrió un error al conectar el stream. Error: ", error);
+            isReconnecting = true;
         }
     };
 
@@ -64,20 +71,22 @@ export default (title, img, url, setKey) => {
             playerInstance.on('error', (error) => {
                 console.error('Ocurrió un error en la conexión. Error: ', error);
 
-                if (!isReconnecting) {
-                    isReconnecting = true;
-                    const retryLoad = () => {
-                        testIframeUrl(function(isValid) {
-                            if (isValid) {
-                                setupPlayer(); // Re-setup the player with the valid URL
-                                isReconnecting = false; // Reset reconnect flag
+                const retryConnection = () => {
+                    if (isReconnecting) {
+                        console.log("Reintentando conexión...");
+                        setTimeout(async () => {
+                            await testIframeUrl();
+                            if (isReconnecting) {
+                                retryConnection();
                             } else {
-                                setTimeout(retryLoad, 3000); // Retry after 3 seconds
+                                location.reload();
                             }
-                        });
-                    };
-                    retryLoad();
-                }
+                        }, 3000);
+                    }
+                };
+
+                isReconnecting = true; 
+                retryConnection();
             });
 
             playerInstance.on('play', () => {
@@ -85,7 +94,7 @@ export default (title, img, url, setKey) => {
             });
 
         } catch (error) {
-            console.error(error);
+            console.error("Error al iniciar el video: ", error);
         }
     };
 
