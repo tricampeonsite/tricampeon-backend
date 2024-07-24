@@ -36,7 +36,7 @@ const trySOURCE = (urlVideo, sources, listServers, index, onValid, onInvalid) =>
     checkSOURCE(sources, function (isValid) {
         if (isValid) {
             onValid(sources)
-            console.log('Servidor encontrado!');
+            console.log(`SERVIDOR ENCONTRADO: ${sources}`);
         } else {
             console.log(sources);
             console.error('Buscando servidor ...')

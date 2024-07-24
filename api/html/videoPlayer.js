@@ -22,6 +22,18 @@ export default (title, img, url, setKey) => {
     var playerInstance = jwplayer("player");
     var urlVideo = "${url}";
 
+    var testIframeUrl = async (callback) => {
+        try {
+            const iframeUrl = window.location.href; // Obtener la URL del iframe
+            const req = await axios.get(iframeUrl);
+            callback(req.status === 200); // retorna true 
+            location.reload();
+        } catch (error) {
+            console.log("REINTENTANDO: ${url}")
+            callback(false);
+        }
+    };
+
     const getURL = async () => {
         try {
             const setupPlayer = () => {
@@ -52,6 +64,16 @@ export default (title, img, url, setKey) => {
             playerInstance.on('error', (error) => {
                 console.error('Ocurrió un error en la conexión. Error: ', error);
 
+                                const retryLoad = () => {
+                    testIframeUrl(function(isValid) {
+                        if (isValid) {
+                            setupPlayer(); // Re-setup the player with the valid URL
+                        } else {
+                            setTimeout(retryLoad, 3000); // Retry after 3 seconds
+                        }
+                    });
+                };
+                retryLoad();
             });
 
             playerInstance.on('play', () => {

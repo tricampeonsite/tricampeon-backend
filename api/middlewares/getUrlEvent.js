@@ -23,8 +23,9 @@ export default async (req, res, next) => {
 
         const { key, keyId, getIMG, getTitle } = parameters(urlStream);
         const listServers = streamingServers(urlStream, server);
+        const randomIndex = Math.floor(Math.random() * listServers.length + 1);
 
-        trySOURCE(urlStream, sources, listServers, 0,
+        trySOURCE(urlStream, sources, listServers, randomIndex,
             function (validSOURCE) {
                 req.videoData = {
                     url: validSOURCE,

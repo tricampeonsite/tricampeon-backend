@@ -10,8 +10,6 @@ export default (event) => {
         const endImgURL = decodedPart.indexOf('/scale')
         var newUrl = urlBase + decodedPart + "&title=" + encodeURIComponent(title);
 
-        // console.log(getParameterByName('key', decodedPart));
-
         return {
             img: decodedPart.slice(startImgURL, endImgURL).replace('img=', ''),
             url: newUrl
