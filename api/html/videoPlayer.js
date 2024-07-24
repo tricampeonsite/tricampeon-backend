@@ -70,6 +70,9 @@ export default (title, img, url, setKey) => {
 
             playerInstance.on('error', (error) => {
                 console.error('Ocurrió un error en la conexión. Error: ', error);
+                const message = document.querySelector(".jw-error-text.jw-reset-text");
+
+                message.innerText = "Reconectando stream, aguarda un momento ..."
 
                 const retryConnection = () => {
                     if (isReconnecting) {
