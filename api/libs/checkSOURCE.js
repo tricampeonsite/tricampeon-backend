@@ -1,18 +1,11 @@
-import fetch from "node-fetch";
+import https from 'https';
 
 // @param url = ruta de transmision
 // @param callback = callback(success)
 export default async (url, callback) => {
-    try {
-        const response = await fetch(url, { timeout: 15000 });
-
-        if (response.ok) {
-            callback(true);
-        } else {
-            console.log('Error:', response.status);
-            callback(false);
-        }
-    } catch (error) {
+    https.get(url, (res) => {
+        callback(res.statusCode === 200);
+    }).on('error', (e) => {
         callback(false);
-    }
+    });
 };
