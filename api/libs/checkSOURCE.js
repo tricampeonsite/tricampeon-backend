@@ -6,8 +6,9 @@ export default async (url, callback) => {
     try {
         const req = await axios.get(url)
         const { status } = req;
-        callback(true);
+        callback(status === 200 || status == 302 || status === 304);
     } catch (error) {
+        console.log("ERROR EN CHECKSOURCE: ", error);
         callback(false);
     }
 };
