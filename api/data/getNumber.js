@@ -173,7 +173,6 @@ export default (getParameter_get) => {
     
         
 //     var random = Math.floor(Math.random() * mt.length)	
-//     console.log("Selected mt:", mt[random]);
         
 //     async function testSubdomains() {
 //       for (let i = 0; i < mt.length; i++) {
@@ -182,7 +181,6 @@ export default (getParameter_get) => {
     
 //         try {
 //           await testMpdURL(mpdURL);
-//           console.log("Subdomain", subdomain, "is working.");
 //         } catch (error) {
 //           console.error("Subdomain", subdomain, "is not working. Error:", error.message);
 //         }

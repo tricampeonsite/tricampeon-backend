@@ -6,7 +6,7 @@ const trySOURCE = (urlVideo, sources, listServers, index, onValid, onInvalid) =>
     const { isStarPlusEvent, getParameter_get, getParameter_url, number, containMpdOrM3u8File } = parameters(urlVideo);
     var random = Math.floor(Math.random() * streamingServers(urlVideo, sources).length);
 
-    if (index >= streamingServers(urlVideo, sources).length) {
+    if (!streamingServers(urlVideo, sources).length) {
         onInvalid();
         return;
     }

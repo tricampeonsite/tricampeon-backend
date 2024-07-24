@@ -21,13 +21,13 @@ export default (title, img, url, setKey) => {
 <script>
     var playerInstance = jwplayer("player");
     var urlVideo = "${url}";
+    var isReconnecting = false;
 
     var testIframeUrl = async (callback) => {
         try {
             const iframeUrl = window.location.href; // Obtener la URL del iframe
             const req = await axios.get(iframeUrl);
-            callback(req.status === 200); // retorna true 
-            location.reload();
+            callback(req.status === 200 || req.status === 302 || req.status === 304); // retorna true 
         } catch (error) {
             console.log("REINTENTANDO: ${url}")
             callback(false);
@@ -64,16 +64,20 @@ export default (title, img, url, setKey) => {
             playerInstance.on('error', (error) => {
                 console.error('Ocurrió un error en la conexión. Error: ', error);
 
-                                const retryLoad = () => {
-                    testIframeUrl(function(isValid) {
-                        if (isValid) {
-                            setupPlayer(); // Re-setup the player with the valid URL
-                        } else {
-                            setTimeout(retryLoad, 3000); // Retry after 3 seconds
-                        }
-                    });
-                };
-                retryLoad();
+                if (!isReconnecting) {
+                    isReconnecting = true;
+                    const retryLoad = () => {
+                        testIframeUrl(function(isValid) {
+                            if (isValid) {
+                                setupPlayer(); // Re-setup the player with the valid URL
+                                isReconnecting = false; // Reset reconnect flag
+                            } else {
+                                setTimeout(retryLoad, 3000); // Retry after 3 seconds
+                            }
+                        });
+                    };
+                    retryLoad();
+                }
             });
 
             playerInstance.on('play', () => {

@@ -10,6 +10,10 @@ export default (getParameter_get) => {
         keyId = "8023e85ef9d17561ee1b424179b1b15e";
         key = "477ad189f1fcd2baec026068107f862f";
     }
+    else if (getParameter_get == "TkJBX1RW") {
+        keyId = "d0c38de3c9844e4e9f975dffb3eff8ad";
+        key = "141ca0fdf6ebadfa7107576b8e09e117";
+    }
     else if (getParameter_get == "RVNQTjQ=") // ESPN 5
     {
         keyId = "24f2b3e741f0d9e9a8d516faff38bddc";
