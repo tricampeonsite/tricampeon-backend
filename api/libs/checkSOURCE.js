@@ -4,12 +4,10 @@ import axios from 'axios';
 // @param callback = callback(success)
 export default async (url, callback) => {
     try {
+        if (url.startsWith('https://')) {
+            url = url.replace('https://', 'http://');
+        }
         const req = await axios.get(url, {
-            headers: {
-                'Access-Control-Allow-Origin': '*', // Puedes ajustar esto según el origen permitido
-                'Access-Control-Allow-Headers': 'content-type, date, x-flow-origin, range',
-                'Access-Control-Allow-Methods': 'GET',
-            },
             timeout: 15000 // Timeout de 15 segundos
         });
         const { status } = req;
