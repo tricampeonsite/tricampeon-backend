@@ -28,7 +28,7 @@ export default (title, img, url, setKey) => {
             const iframeUrl = window.location.href;
             const req = await axios.get(iframeUrl);
     
-            if(req.status === 200){
+            if(req.status === 200 || req.status === 304 || req.status === 302){
               isReconnecting = false;
               console.log("Conexión exitosa");
             } else {
@@ -61,6 +61,7 @@ export default (title, img, url, setKey) => {
                     height: "100%",
                     aspectratio: "16:9",
                     autostart: true,
+                    controls: true,
                     cast: {},
                     sharing: {}
                 });
@@ -84,7 +85,7 @@ export default (title, img, url, setKey) => {
                             } else {
                                 location.reload();
                             }
-                        }, 3000);
+                        }, 2000);
                     }
                 };
 

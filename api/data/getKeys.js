@@ -79,7 +79,10 @@ export default (getParameter_get) => {
         keyId = "e32aaa4b67430b3b51be1efce5a74ac5";
         key = "ad60c5e1d378a97271bf8688f094d092";
     }
-
+    else if(getParameter_get == "Q0xBUk9WSURFTw==") {
+        keyId = "NzRjZGNiNjNmZjNlNGYzY2U0ZGE0MjQzYjZkMWUxZDg";
+        key = "OWI4MzY2ZmE4ZTllYmNkZjRiMzQ5ZDZjOWQ1MjgxMTU"
+    }
     else if (getParameter_get == "RVNQTjJfQXJn") {
         keyId = "65a5bfa3c7a72dde60be9b0c7406c8fc";
         key = "0b40ae9f78a7bac3b57ecbf72d3c081e";

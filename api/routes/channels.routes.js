@@ -1,6 +1,5 @@
 import { Router } from "express";
-import { createNewChannel, getAllChannels, getChannelByID, getChannelSchedule, sendVideo, testDecodeURL } from "../controllers/channels.controllers.js";
-import getEvent from "../middlewares/getEvent.js";
+import { createNewChannel, getAllChannels, getChannelByID, getChannelSchedule, sendVideo, tests_url } from "../controllers/channels.controllers.js";
 import getUrlEvent from "../middlewares/getUrlEvent.js";
 import helmet from "helmet";
 import matchOrChannel from "../middlewares/matchOrChannel.js";
@@ -24,6 +23,6 @@ router.get('/getStream/:idEvent',
         handleErrors
     ],
     sendVideo);
-router.get('/testDecodeURL', helmet(), testDecodeURL);
+router.get('/tests_url', helmet(), tests_url);
 
 export default router;

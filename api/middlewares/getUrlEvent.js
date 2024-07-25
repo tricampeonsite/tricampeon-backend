@@ -1,6 +1,8 @@
+import extractSource_scrapping from "../libs/extractSource_scrapping.js";
 import parameters from "../libs/parameters.js";
 import trySOURCE from "../libs/sources.js";
 import streamingServers from "../libs/streamingServers.js";
+import listChannels_scrapped from "../routes/listChannels_scrapped.js";
 
 export default async (req, res, next) => {
     try {
@@ -21,6 +23,13 @@ export default async (req, res, next) => {
             }
         }
 
+        const isUrlScrapped = listChannels_scrapped.some(nameChannel => new RegExp(`\\b${nameChannel}\\b`).test(urlStream));
+
+        if(isUrlScrapped) {
+            const replaceUrlStream = await extractSource_scrapping(urlStream);
+            urlStream = replaceUrlStream;
+        }
+
         const { key, keyId, getIMG, getTitle } = parameters(urlStream);
         const listServers = streamingServers(urlStream, server);
         const randomIndex = Math.floor(Math.random() * listServers.length + 1);
@@ -39,11 +48,11 @@ export default async (req, res, next) => {
             function (err) {
                 console.error('No se encontro el servidor. Error: ', err);
                 req.status = { status: 500, error: 'No se encontro servidor para esta transmisión.', message: err }
-                // return await Promise.reject({status: 500, error: 'No se encontro servidor para esta transmisión.', message: err})
                 next()
             })
 
     } catch (error) {
-        console.error('Ocurrio un error en getURLevent. Error: ', error)
+        console.error('Ocurrio un error en getURLevent. Error: ', error);
+        next(error);
     }
 }

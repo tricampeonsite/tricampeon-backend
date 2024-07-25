@@ -1,11 +1,10 @@
 import fetch from "node-fetch";
-import starPlusEvents from "../libs/starPlusEvents.js";
 import Channels from "../models/Channels.js"
 import decodeImgURL from "../libs/decodeImgURL.js";
-import decodeURL from "../libs/decodeURL.js";
 import mongoose from "mongoose";
 import videoPlayer from "../html/videoPlayer.js";
 import notFoundVideo from "../html/notFoundVideo.js";
+import extractSource_scrapping from "../libs/extractSource_scrapping.js";
 
 export const createNewChannel = async (req, res) => {
     try {
@@ -77,15 +76,13 @@ export const getChannelByID = async (req, res) => {
 }
 
 
-export const testDecodeURL = async (req, res) => {
+export const tests_url = async (req, res) => {
     try {
-        const STARPLUS_EVENTS = process.env.URL_STARPLUS_EVENTS;
-        const reqEvent = await fetch(`${STARPLUS_EVENTS}`);
-        const events = await reqEvent.json();
+        
+        const urlRecived = req.body.urlRecived;
+        const urlScrapped = await extractSource_scrapping(urlRecived);
 
-        const decode = decodeURL(events[11])
-
-        res.status(200).json({ url: espn2 })
+        res.status(200).json({url: urlScrapped});
     } catch (error) {
         console.error(error)
     }
@@ -108,9 +105,13 @@ export const sendVideo = async (req, res) => {
             }
         }
 
-        res.send(videoPlayer(title, img, url, setKey));
+        res.status(200).send(videoPlayer(title, img, url, setKey));
     } catch (error) {
         console.error('Ocurrio un error al obtener el video.')
-        res.send(notFoundVideo())
+        res.status(500).send(notFoundVideo())
     }
 }
+
+
+
+// https://deportelibre.live/channel/claro-sports

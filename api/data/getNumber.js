@@ -140,6 +140,8 @@ export default (getParameter_get) => {
      getParameter_get == "Tmlja2Vsb2Rlb24="  || 
      getParameter_get == "QWR1bHRfU3dpbQ==" ) {
         number = 3;
+    } else if(getParameter_get == "Q0xBUk9WSURFTw==") {
+        number = null;
     } else {
         number = 3
     }
