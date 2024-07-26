@@ -2,11 +2,13 @@ import axios from "axios";
 import { load } from "cheerio";
 import getUrl from "./getUrl.js";
 import https from 'https'
+import { config } from "dotenv";
+config();
 
 // @params url = String | recibe la url donde esta el stream
 export default async (url) => {
     try {
-        const response = await axios.get(`http://localhost:3100/api/tricampeon/proxy/?url=${url}`, {
+        const response = await axios.get(`http://localhost:${process.env.PORT}/api/tricampeon/proxy/?url=${url}`, {
             headers: {
                 "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
                 "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8",
