@@ -40,6 +40,7 @@ import betsRoutes from './routes/bets.routes.js';
 import homeRoutes from './routes/home.routes.js';
 import channelRoutes from './routes/channels.routes.js';
 import authRoutes from './routes/auth.routes.js';
+import proxyRoutes from './routes/proxy.routes.js';
 import compression from 'compression';
 
 
@@ -61,5 +62,6 @@ app.use('/api/tricampeon/users', helmet(), usersRoutes);
 app.use('/api/tricampeon/bets', helmet(), betsRoutes);
 app.use('/api/tricampeon/channels', channelRoutes);
 app.use('/api/tricampeon/auth', helmet(), authRoutes);
+app.use('/api/tricampeon/proxy', helmet(), proxyRoutes);
 
 export default app;
