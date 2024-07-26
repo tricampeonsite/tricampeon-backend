@@ -5,7 +5,11 @@ import getUrl from "./getUrl.js";
 //@params url = String | recibe la url donde esta el stream
 export default async (url) => {
     try {
-        const response = await axios.get(url);
+        const response = await axios.get(url, {
+            method: "GET",
+            withCredentials: true
+        });
+
         const $ = load(response.data);
 
         const scriptsContent = [];
@@ -16,7 +20,7 @@ export default async (url) => {
                 scriptsContent.push(scriptText.trim());
             }
         });
-
+        
         return getUrl(scriptsContent[0]);
     } catch (error) {
         console.error('Error al hacer fetching en getSource_scrapping! Error: ', error.code);

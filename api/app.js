@@ -12,6 +12,7 @@ import { getMembers_Socket, joinEvent_Socket, sendMessage_Socket } from './socke
 export const io = new SocketServer(server, {
     cors: {
         origin: process.env.URL_HOST,
+        credentials: true
     },
     path: process.env.SOCKET_PATH,
 });

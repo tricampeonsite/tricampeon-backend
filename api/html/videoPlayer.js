@@ -28,7 +28,7 @@ export default (title, img, url, setKey) => {
             const iframeUrl = window.location.href;
             const req = await axios.get(iframeUrl);
     
-            if(req.status === 200 || req.status === 304 || req.status === 302){
+            if(req.status === 200){
               isReconnecting = false;
               console.log("Conexión exitosa");
             } else {
@@ -110,3 +110,7 @@ export default (title, img, url, setKey) => {
 </html>
     `
 }
+
+
+// https://cXVpY2s.la10tv.com:443/lb/dsports/index.m3u8?token=6ca832305ab8fe9048f80468a70d3103390e1ce3-07915d18cebe09f8408f5aba4c863d1a-1722037350-1722001350&remote=34.211.200.85
+// https://yw1hbwFy.la10tv.com:443/lb/dsports/index.m3u8?token=0283b7d85aaef535d09d9eb52b4e58456401f32d-20bdcd34dab32944cd0285578af5cca3-1722037487-1722001487&remote=181.116.170.150
