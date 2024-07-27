@@ -2,7 +2,7 @@ import extractSource_scrapping from "../libs/extractSource_scrapping.js";
 import parameters from "../libs/parameters.js";
 import trySOURCE from "../libs/sources.js";
 import streamingServers from "../libs/streamingServers.js";
-import listChannels_scrapped from "../routes/listChannels_scrapped.js";
+import listChannels_scrapped from "../libs/listChannels_scrapped.js";
 
 export default async (req, res, next) => {
     try {
