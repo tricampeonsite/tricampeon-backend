@@ -55,7 +55,7 @@ export default async (req, res, next) => {
 
        try {
         // convertir el el script texto a JSON.
-        const parseDataHomeReducer = JSON.parse(`{${await getHomeReducer(dateMatch)}}`);
+        const parseDataHomeReducer = JSON.parse(await getHomeReducer(dateMatch));
         const dataMatchesByCompetition = parseDataHomeReducer.matchesByCompetition;
 
         if (!dataMatchesByCompetition.length) {
@@ -79,7 +79,7 @@ export default async (req, res, next) => {
                     
 
 // obtener datos de los partidos en formato text.
-const getHomeReducer = async (dateMatch) => {                                           // esta url va sin fecha. El formato de fecha es 2024-04-30
+const getHomeReducer = async (dateMatch) => {
     const url = dateMatch ? `https://canchallena.lanacion.com.ar/fecha/${dateMatch}` : 'https://canchallena.lanacion.com.ar/';
 
     try {
@@ -95,23 +95,29 @@ const getHomeReducer = async (dateMatch) => {                                   
             }
         });
 
-        let getIndexStartHomeReducer; 
-        let getIndexEndHomeReducer;
+        let homeReducer = null;
 
         for (let i = 0; i < scriptsContent.length; i++) {
             const element = scriptsContent[i];
-            getIndexStartHomeReducer = element.indexOf('"matchesByCompetition"');
-            getIndexEndHomeReducer = element.indexOf(',"timeUntilNextMatch"');
+
+            // Eliminar saltos de línea dentro de los valores del JSON
+            const cleanedElement = element.replace(/\s+/g, ' ');
+
+            const getIndexStartHomeReducer = cleanedElement.indexOf('{"matchesByCompetition"');
+            const getIndexEndHomeReducer = cleanedElement.indexOf(',"matchesDataEmptyState"');
+
+            if (getIndexStartHomeReducer !== -1 && getIndexEndHomeReducer !== -1) {
+                homeReducer = cleanedElement.slice(getIndexStartHomeReducer, getIndexEndHomeReducer);
+                break;
+            }
         }
 
-        const homeReducer = scriptsContent.length > 0 ? scriptsContent[0].slice(getIndexStartHomeReducer, getIndexEndHomeReducer) : null;
-
-        return homeReducer;
+        return homeReducer ? homeReducer : null;
     } catch (error) {
         console.error('Error al hacer fetching en getHomeReducer! Error: ', error.code);
         return null;
     }
-}
+};
 
 
 const rewriteChannelsByMatches = (matches) => {
@@ -121,10 +127,11 @@ const rewriteChannelsByMatches = (matches) => {
             match.matchStatus = setMatchStatus(match.matchDateText ,rewriteLocalTime, match.matchStatus); 
             match.tournamentId = obj.competition.tournamentId;
             match.competitionName = obj.competition.competitionName;
+
             if(match.channels){
-                match.channels = match.channels.map(channel => {
+                match.channels = match.channels.channelsList.map(channel => {
                     return {
-                        name: channel.trim().replace(/\s/g, '').toLowerCase(),
+                        name: channel.name.trim().replace(/\s/g, '').toLowerCase(),
                         altName: channel
                     };
                 });

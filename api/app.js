@@ -1,13 +1,25 @@
 import express from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
-import { config } from 'dotenv';
 import helmet from 'helmet';
 import http from 'http';
 import { Server as SocketServer } from 'socket.io';
 const app = express();
 export const server = http.createServer(app);
+import compression from 'compression';
 import { getMembers_Socket, joinEvent_Socket, sendMessage_Socket } from './sockets/sockets.js';
+
+//   routes
+import leaguesRoutes from './routes/leagues.routes.js';
+import matchesRoutes from './routes/matches.routes.js';
+import scorersRoutes from './routes/scorers.routes.js';
+import teamsRoutes from './routes/teams.routes.js';
+import usersRoutes from './routes/users.routes.js';
+import betsRoutes from './routes/bets.routes.js';
+import homeRoutes from './routes/home.routes.js';
+import channelRoutes from './routes/channels.routes.js';
+import authRoutes from './routes/auth.routes.js';
+import proxyRoutes from './routes/proxy.routes.js';
 
 export const io = new SocketServer(server, {
     cors: {
@@ -28,21 +40,6 @@ io.on('disconnect', (socket) => {
     // se podria lanzar otro evento 'userDisconncted',asi incluir el idEvent y datos del usuario.
     console.log(`El socket "${socket.id}" se ha desconectado`);
 })
-
-
-//   routes
-import leaguesRoutes from './routes/leagues.routes.js';
-import matchesRoutes from './routes/matches.routes.js';
-import scorersRoutes from './routes/scorers.routes.js';
-import teamsRoutes from './routes/teams.routes.js';
-import usersRoutes from './routes/users.routes.js';
-import betsRoutes from './routes/bets.routes.js';
-import homeRoutes from './routes/home.routes.js';
-import channelRoutes from './routes/channels.routes.js';
-import authRoutes from './routes/auth.routes.js';
-import proxyRoutes from './routes/proxy.routes.js';
-import compression from 'compression';
-
 
 //   middlewares 
 app.use(cors());

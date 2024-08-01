@@ -2,8 +2,6 @@ import axios from "axios";
 import { load } from "cheerio"
 import getUrl from "./getUrl.js";
 
-const url = "https://la10hd.com/vivo/canal.php?stream=dsports";
-
 //@params url = String 
 export default async (url) => {
     try {
