@@ -1,0 +1,13 @@
+services:
+  backend-tricampeon:
+    build: 
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3100:3100"
+    volumes:
+      - .:/usr/src/app
+    image: backend-tricampeon-dev
+    
+volumes:
+  backend-tricampeon-dev:

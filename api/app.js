@@ -50,7 +50,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended:false }));
 
 
-app.use('/api/tricampeon', homeRoutes)
+app.use('/', homeRoutes);
 app.use('/api/tricampeon/leagues', helmet(), leaguesRoutes);
 app.use('/api/tricampeon/matches', helmet(), matchesRoutes);
 app.use('/api/tricampeon/scorers', helmet(), scorersRoutes);

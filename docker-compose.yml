@@ -1,0 +1,7 @@
+services:
+  backend-tricampeon:
+    build: .
+    ports:
+      - "3100:3100"
+    image: backend-tricampeon-production
+    

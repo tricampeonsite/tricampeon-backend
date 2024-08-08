@@ -2,7 +2,7 @@
 FROM node:18.14.2
 
 # Establece el directorio de trabajo en el contenedor
-WORKDIR /usr/src/app/api
+WORKDIR /usr/src/app
 
 # Copia el package.json y el package-lock.json
 COPY package*.json ./
@@ -17,4 +17,4 @@ COPY . .
 EXPOSE 3100
 
 # Define el comando por defecto para ejecutar la aplicación
-CMD ["npm","run","start"]
+CMD ["node", "api/indexAppTricampeon.js"]
