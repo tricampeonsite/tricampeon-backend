@@ -104,7 +104,7 @@ const getHomeReducer = async (dateMatch) => {
             const cleanedElement = element.replace(/\s+/g, ' ');
 
             const getIndexStartHomeReducer = cleanedElement.indexOf('{"matchesByCompetition"');
-            const getIndexEndHomeReducer = cleanedElement.indexOf(',"matchesDataEmptyState"');
+            const getIndexEndHomeReducer = cleanedElement.indexOf(',"emptyState"');
 
             if (getIndexStartHomeReducer !== -1 && getIndexEndHomeReducer !== -1) {
                 homeReducer = cleanedElement.slice(getIndexStartHomeReducer, getIndexEndHomeReducer);
